@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 60%;
+    margin: 20px auto;
+    background: rgb(221, 211, 211);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+}
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+button:hover {
+    background-color: #218838;
+}
+.hidden {
+    display: none;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-buttons">
+        <button onclick="window.location.href='./newregister.html'">Register</button>
+        <button onclick="window.location.href='./login.html'">Login</button>
+    </div>
+    <h1>Resume Builder</h1>
+    <form id="resume-form">
+
+       
+        <label for="name">name:</label>
+        <input type="text" id="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" required>
+        
+        <label for="linkedin">LinkedIn:</label>
+        <input type="url" id="linkedin">
+        
+        <label for="social">Other Social Media:</label>
+        <input type="url" id="social">
+        
+        <label for="address">Address:</label>
+        <textarea id="address" required></textarea>
+        
+        <label for="education">Education Qualification:</label>
+        <textarea id="education" required></textarea>
+        
+        <label for="gap">Study Gap (if any):</label>
+        <textarea id="gap"></textarea>
+        
+        <label for="internship">Internship:</label>
+        <textarea id="internship"></textarea>
+        
+        <label for="skills">Skills (comma separated):</label>
+        <textarea id="skills" required></textarea>
+        
+        <label for="projects">Projects:</label>
+        <textarea id="projects"></textarea>
+        
+        <label for="activities">Extracurricular Activities:</label>
+        <textarea id="activities"></textarea>
+        
+        <label for="references">References:</label>
+        <textarea id="references"></textarea>
+        
+        <button type="button" onclick="generateResume()">Generate Resume</button>
+    </form>
+
+    <div id="resume-output" class="hidden">
+        <h2>Generated Resume</h2>
+        <div id="resume-content" class="resume-box"></div>
+        <button onclick="printResume()">Print Resume</button>
+        <button onclick="downloadResume()">Download Resume</button>
+    </div>
+</div>
+
+<script>
+function generateResume() {
+
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const linkedin = document.getElementById("linkedin").value;
+    const social = document.getElementById("social").value;
+    const address = document.getElementById("address").value;
+    const education = document.getElementById("education").value;
+    const gap = document.getElementById("gap").value;
+    const internship = document.getElementById("internship").value;
+    const skills = document.getElementById("skills").value;
+    const projects = document.getElementById("projects").value;
+    const activities = document.getElementById("activities").value;
+    const references = document.getElementById("references").value;
+
+    const resumeContent = 
+                
+`       <h1>RESUME</h1>
+        <h2>${name }</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank">${linkedin}</a></p>
+        <p><strong>Social Media:</strong> <a href="${social}" target="_blank">${social}</a></p>
+        <p><strong>Address:</strong> ${address}</p>
+        <h3>Education</h3>
+        <p>${education}</p>
+        <h3>Study Gap</h3>
+        <p>${gap}</p>
+        <h3>Internship</h3>
+        <p>${internship}</p>
+        <h3>Skills</h3>
+        <p>${skills}</p>
+        <h3>Projects</h3>
+        <p>${projects}</p>
+        <h3>Extracurricular Activities</h3>
+        <p>${activities}</p>
+        <h3>References</h3>
+        <p>${references}</p>
+    `;
+
+    document.getElementById("resume-content").innerHTML = resumeContent;
+    document.getElementById("resume-output").classList.remove("hidden");
+}
+
+function printResume() {
+    window.print();
+}
+
+function downloadResume() {
+    const resumeContent = document.getElementById("resume-content").innerHTML;
+    const blob = new Blob([resumeContent], { type: "text/html" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "resume.html";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+</body>
+</html>
